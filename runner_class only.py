@@ -102,8 +102,7 @@ bg_music = pygame.mixer.Sound('audio/music.wav')
 bg_music.play(loops = -1)
 
 #Groups
-player = pygame.sprite.GroupSingle()
-player.add(Player())
+player = pygame.sprite.GroupSingle(Player())
 
 obstacle_group = pygame.sprite.Group()
 
@@ -167,3 +166,4 @@ while True:
 
 	pygame.display.update()
 	clock.tick(60)
+	
