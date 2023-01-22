@@ -135,8 +135,18 @@ player.add(Player())
 
 obstacle_group = pygame.sprite.Group()
 
-sky_surface = pygame.image.load('graphics/Sky.png').convert()
-ground_surface = pygame.image.load('graphics/ground.png').convert()
+# Background
+# ground_surface = pygame.image.load('graphics/ground.png').convert()
+ground_surface_1 = pygame.image.load('graphics/infiniteGround.png').convert()
+ground_surface_2 = pygame.image.load('graphics/infiniteGround.png').convert()
+ground_surf_rect_1 = ground_surface_1.get_rect(topleft = (0,300))
+ground_surf_rect_2 = ground_surface_2.get_rect(topleft = (786,300))
+
+# sky_surface = pygame.image.load('graphics/Sky.png').convert()
+sky_surface_1 = pygame.image.load('graphics/infiniteSky.png').convert()
+sky_surface_2 = pygame.image.load('graphics/infiniteSky.png').convert()
+sky_surf_rect_1 = sky_surface_1.get_rect(left = 0)
+sky_surf_rect_2 = sky_surface_2.get_rect(left = 800)
 
 # Intro screen
 player_stand = pygame.image.load('graphics/player/player_stand.png').convert_alpha()
@@ -170,8 +180,26 @@ while True:
 
 
 	if game_active:
-		screen.blit(sky_surface,(0,0))
-		screen.blit(ground_surface,(0,300))
+		sky_surf_rect_1.left -= 1
+		sky_surf_rect_2.left -= 1
+		if sky_surf_rect_1.right == 0:
+			sky_surf_rect_1.left = 800
+		elif sky_surf_rect_2.right == 0:
+			sky_surf_rect_2.left = 800
+		screen.blit(sky_surface_1,sky_surf_rect_1)
+		screen.blit(sky_surface_2,sky_surf_rect_2)
+		# screen.blit(sky_surface,(0,0))
+
+		ground_surf_rect_1.left -= 2
+		ground_surf_rect_2.left -= 2
+		if ground_surf_rect_1.right <= 0:
+			ground_surf_rect_1.left = 786
+		elif ground_surf_rect_2.right <= 0:
+			ground_surf_rect_2.left = 786
+		screen.blit(ground_surface_1,ground_surf_rect_1)
+		screen.blit(ground_surface_2,ground_surf_rect_2)
+		# screen.blit(ground_surface,(0,300))
+
 		score = display_score()
 		
 		player.draw(screen)
