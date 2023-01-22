@@ -9,14 +9,22 @@ class Player(pygame.sprite.Sprite):
 		player_walk_2 = pygame.image.load('graphics/player/player_walk_2.png').convert_alpha()
 		self.player_walk = [player_walk_1,player_walk_2]
 		self.player_index = 0
+
 		self.player_jump = pygame.image.load('graphics/player/jump.png').convert_alpha()
+
+		self.crouch = pygame.image.load('graphics/player/crouch_0.png').convert_alpha()
+		crouch_1 = pygame.image.load('graphics/player/crouch_1.png').convert_alpha()
+		crouch_2 = pygame.image.load('graphics/player/crouch_2.png').convert_alpha()
+		crouch_3 = pygame.image.load('graphics/player/crouch_3.png').convert_alpha()
+		self.player_crouch = [self.crouch,crouch_1,crouch_2,crouch_3]
+		self.crouch_index = 0
 
 		self.image = self.player_walk[self.player_index]
 		self.rect = self.image.get_rect(midbottom = (80,300))
 		self.gravity = 0
 
 		self.jump_sound = pygame.mixer.Sound('audio/jump.mp3')
-		self.jump_sound.set_volume(0.5)
+		self.jump_sound.set_volume(0.05)
 
 	def player_input(self):
 		keys = pygame.key.get_pressed()
@@ -31,12 +39,24 @@ class Player(pygame.sprite.Sprite):
 			self.rect.bottom = 300
 
 	def animation_state(self):
+		keys = pygame.key.get_pressed()
+
 		if self.rect.bottom < 300: 
 			self.image = self.player_jump
+			
+		#TODO Optimization
+		elif keys[pygame.K_DOWN] and self.rect.bottom == 300:
+			self.crouch_index += 0.25
+			if self.crouch_index >= len(self.player_crouch):
+				self.crouch_index = 0
+			self.image = self.player_crouch[int(self.crouch_index)]
+			self.rect = self.image.get_rect(midbottom = (80,300))
 		else:
 			self.player_index += 0.1
-			if self.player_index >= len(self.player_walk):self.player_index = 0
+			if self.player_index >= len(self.player_walk):
+				self.player_index = 0
 			self.image = self.player_walk[int(self.player_index)]
+			self.rect = self.image.get_rect(midbottom = (80,300))
 
 	def update(self):
 		self.player_input()
@@ -106,6 +126,7 @@ game_active = False
 start_time = 0
 score = 0
 bg_music = pygame.mixer.Sound('audio/music.wav')
+bg_music.set_volume(0.05)
 bg_music.play(loops = -1)
 
 #Groups
