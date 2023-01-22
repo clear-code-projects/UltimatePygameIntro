@@ -144,14 +144,12 @@ ground_surface_1 = pygame.image.load('graphics/infiniteSnowGround.png').convert(
 ground_surface_2 = pygame.image.load('graphics/infiniteSnowGround.png').convert()
 ground_surf_rect_1 = ground_surface_1.get_rect(topleft = (0,300))
 ground_surf_rect_2 = ground_surface_2.get_rect(topleft = (786,300))
-
 ### SKY
 # sky_surface = pygame.image.load('graphics/Sky.png').convert()
-sky_surface_1 = pygame.image.load('graphics/infiniteSky.png').convert()
-sky_surface_2 = pygame.image.load('graphics/infiniteSky.png').convert()
+sky_surface_1 = pygame.image.load('graphics/infiniteNightSky.png').convert()
+sky_surface_2 = pygame.image.load('graphics/infiniteNightSky.png').convert()
 sky_surf_rect_1 = sky_surface_1.get_rect(left = 0)
 sky_surf_rect_2 = sky_surface_2.get_rect(left = 800)
-
 ### SNOW (Optional)
 snow_surface_1 = pygame.image.load('graphics/snow.png').convert_alpha()
 snow_surface_2 = pygame.image.load('graphics/snow.png').convert_alpha()
