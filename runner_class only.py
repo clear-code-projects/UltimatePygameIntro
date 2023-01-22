@@ -125,30 +125,40 @@ test_font = pygame.font.Font('font/Pixeltype.ttf', 50)
 game_active = False
 start_time = 0
 score = 0
+
+# MUSIC
 bg_music = pygame.mixer.Sound('audio/music.wav')
 bg_music.set_volume(0.05)
 bg_music.play(loops = -1)
 
-#Groups
+# GROUPS
 player = pygame.sprite.GroupSingle()
 player.add(Player())
 
 obstacle_group = pygame.sprite.Group()
 
-# Background
+# BACKGROUND
+### GROUND
 # ground_surface = pygame.image.load('graphics/ground.png').convert()
-ground_surface_1 = pygame.image.load('graphics/infiniteGround.png').convert()
-ground_surface_2 = pygame.image.load('graphics/infiniteGround.png').convert()
+ground_surface_1 = pygame.image.load('graphics/infiniteSnowGround.png').convert()
+ground_surface_2 = pygame.image.load('graphics/infiniteSnowGround.png').convert()
 ground_surf_rect_1 = ground_surface_1.get_rect(topleft = (0,300))
 ground_surf_rect_2 = ground_surface_2.get_rect(topleft = (786,300))
 
+### SKY
 # sky_surface = pygame.image.load('graphics/Sky.png').convert()
 sky_surface_1 = pygame.image.load('graphics/infiniteSky.png').convert()
 sky_surface_2 = pygame.image.load('graphics/infiniteSky.png').convert()
 sky_surf_rect_1 = sky_surface_1.get_rect(left = 0)
 sky_surf_rect_2 = sky_surface_2.get_rect(left = 800)
 
-# Intro screen
+### SNOW (Optional)
+snow_surface_1 = pygame.image.load('graphics/snow.png').convert_alpha()
+snow_surface_2 = pygame.image.load('graphics/snow.png').convert_alpha()
+snow_rect_1 = snow_surface_1.get_rect(top = 0)
+snow_rect_2 = snow_surface_2.get_rect(top = -300)
+
+# INTRO SCREEN
 player_stand = pygame.image.load('graphics/player/player_stand.png').convert_alpha()
 player_stand = pygame.transform.rotozoom(player_stand,0,2)
 player_stand_rect = player_stand.get_rect(center = (400,200))
@@ -159,7 +169,7 @@ game_name_rect = game_name.get_rect(center = (400,80))
 game_message = test_font.render('Press space to run',False,(111,196,169))
 game_message_rect = game_message.get_rect(center = (400,330))
 
-# Timer 
+# TIMER 
 obstacle_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(obstacle_timer,1500)
 
@@ -180,6 +190,7 @@ while True:
 
 
 	if game_active:
+		# SKY
 		sky_surf_rect_1.left -= 1
 		sky_surf_rect_2.left -= 1
 		if sky_surf_rect_1.right == 0:
@@ -190,6 +201,17 @@ while True:
 		screen.blit(sky_surface_2,sky_surf_rect_2)
 		# screen.blit(sky_surface,(0,0))
 
+		# SNOW
+		snow_rect_1.top += 1
+		snow_rect_2.top += 1
+		if snow_rect_1.top >= 300:
+			snow_rect_1.bottom = 0
+		if snow_rect_2.top >= 300:
+			snow_rect_2.bottom = 0
+		screen.blit(snow_surface_1,snow_rect_1)
+		screen.blit(snow_surface_2,snow_rect_2)
+
+		# GROUND
 		ground_surf_rect_1.left -= 2
 		ground_surf_rect_2.left -= 2
 		if ground_surf_rect_1.right <= 0:
